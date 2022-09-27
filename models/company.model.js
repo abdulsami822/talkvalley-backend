@@ -6,24 +6,26 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const schema = mongoose.Schema(
   {
+    _id: Number,
     name: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, "enter a company name"],
+      unique: [true, "company name is already taken"],
+      trim: true,
     },
     url: {
       type: String,
-      validate(value) {
-        if (!validator.isURL(value)) {
-          throw new ApiError(httpStatus.BAD_REQUEST, "url is not correct");
-        }
-      },
+      required: [true, "enter company website url"],
+      unique: [true, "company name is already taken"],
+      trim: true,
+      validate: [validator.isURL, "url is not correct"],
     },
   },
   { _id: false }
 );
 
-schema.plugin(AutoIncrement); // auto increments _id like 1,2,3....
+// auto increments _id like 1,2,3....
+schema.plugin(AutoIncrement);
 
 const Company = mongoose.model("companies", schema);
 

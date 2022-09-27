@@ -9,6 +9,7 @@ const ApiError = require("./middlewares/ApiError");
 const httpStatus = require("http-status");
 
 const router = require("./routes");
+const { errorConvertor, errorHandler } = require("./middlewares/error");
 
 const app = express();
 
@@ -32,8 +33,12 @@ app.use(mongoSanitize());
 app.use("/", router);
 
 //not-found
-app.use((req, res, next) => {
+app.use((res, req, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, "Requested API is not present"));
 });
 
-app.module.exports = app;
+app.use(errorConvertor);
+
+app.use(errorHandler);
+
+module.exports = app;
