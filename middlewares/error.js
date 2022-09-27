@@ -4,8 +4,13 @@ const ApiError = require("./ApiError");
 const errorConvertor = (error, req, res, next) => {
   let convertedError;
 
+  //expected error thrown by controllers
+  if (error instanceof ApiError) {
+    next(error);
+  }
+
   //validation error
-  if (error.name == "ValidationError") {
+  else if (error.name == "ValidationError") {
     const errors = Object.values(error.errors).map((err) => err.message);
     const message = errors[errors.length - 1]; //response with final error in the errors array
     convertedError = new ApiError(httpStatus.BAD_REQUEST, message);

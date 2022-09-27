@@ -1,18 +1,22 @@
-const httpStatus = require("http-status");
-const ApiError = require("../middlewares/ApiError");
 const Company = require("../models/company.model");
 
 const insertCompany = async (companyData) => {
-  const createdCompany = await Company.create(companyData);
-  return createdCompany;
+  const company = await Company.create(companyData);
+  return company;
 };
 
-const getCompanyByName = async (name) => {
-  const company = await Company.findOne({ name });
+const getCompanyById = async ({ id }) => {
+  const company = await Company.findOne({ _id: id });
   return company;
+};
+
+const getAllCompanies = async () => {
+  const companies = Company.find();
+  return companies;
 };
 
 module.exports = {
   insertCompany,
-  getCompanyByName,
+  getCompanyById,
+  getAllCompanies,
 };
