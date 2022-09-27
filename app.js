@@ -1,11 +1,18 @@
 const express = require("express");
+
 const cors = require("cors");
 const helmet = require("helmet");
 const compression = require("compression");
 const mongoSanitize = require("express-mongo-sanitize");
 
+const ApiError = require("./middlewares/ApiError");
+const httpStatus = require("http-status");
+
+const router = require("./routes");
+
 const app = express();
 
+//middlewares
 //parse requests containing json payloads
 app.use(express.json());
 
@@ -22,5 +29,11 @@ app.use(compression());
 app.use(mongoSanitize());
 
 //entry point
+app.use("/", router);
 
-module.exports = app;
+//not-found
+app.use((req, res, next) => {
+  next(new ApiError(httpStatus.NOT_FOUND, "Requested API is not present"));
+});
+
+app.module.exports = app;
