@@ -5,46 +5,37 @@ const validator = require("validator");
 const ApiError = require("../middlewares/ApiError");
 const Company = require("./company.model");
 
-const schema = mongoose.schema(
-  {
-    companyId: {
-      type: Number,
-      ref: Company,
-      required: true,
-      minlength: 0,
-    },
-    primaryText: {
-      type: String,
-      required: true,
-    },
-    headline: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-    },
-    CTA: {
-      type: String,
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-      validate(value) {
-        if (!validator.isURL(value)) {
-          throw new ApiError(
-            httpStatus.BAD_REQUEST,
-            "image url is not correct"
-          );
-        }
-      },
-    },
+const schema = mongoose.Schema({
+  adId: Number,
+  companyId: {
+    type: Number,
+    ref: Company,
+    required: [true, "company id is required"],
   },
-  { _id: false }
-);
+  primaryText: {
+    type: String,
+    required: [true, "primary text is required"],
+  },
+  headline: {
+    type: String,
+    required: [true, "headline is required"],
+  },
+  description: {
+    type: String,
+    required: [true, "description is required"],
+  },
+  CTA: {
+    type: String,
+    required: [true, "CTA is required"],
+  },
+  imageUrl: {
+    type: String,
+    required: true,
+    validate: [validator.isURL, "Image url is not correct"],
+  },
+});
 
-schema.plugin(AutoIncrement);
+schema.plugin(AutoIncrement, { inc_field: "adId" });
 
 const Ads = mongoose.model("ads", schema);
 

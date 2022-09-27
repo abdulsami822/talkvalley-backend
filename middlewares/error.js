@@ -26,6 +26,7 @@ const errorConvertor = (error, req, res, next) => {
 
   //Unknown error
   else {
+    console.log(error);
     const message = "An unknown error occured";
     convertedError = new ApiError(httpStatus.INTERNAL_SERVER_ERROR, message);
   }
