@@ -1,0 +1,24 @@
+{
+  "name": "talkvalley-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "express-mongo-sanitize": "^2.2.0",
+    "helmet": "^6.0.0",
+    "mongoose": "^6.6.2",
+    "path": "^0.12.7",
+    "validator": "^13.7.0"
+  }
+}
