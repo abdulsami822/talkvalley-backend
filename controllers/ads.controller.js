@@ -29,8 +29,19 @@ const getAd = async (req, res, next) => {
   }
 };
 
+const searchAds = async (req, res, next) => {
+  try {
+    const { query } = req;
+    const ads = await adsService.searchAd(query);
+    res.status(httpStatus.OK).send(ads);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   insertAd,
   getAllAds,
   getAd,
+  searchAds,
 };

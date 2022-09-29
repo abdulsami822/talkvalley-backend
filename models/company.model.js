@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const ApiError = require("../middlewares/ApiError");
-const httpStatus = require("http-status");
 const validator = require("validator");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
@@ -23,7 +21,7 @@ const schema = mongoose.Schema(
   },
   { _id: false }
 );
-
+schema.index({ "$**": "text" }, { name: "AllTextIndex" });
 // auto increments _id like 1,2,3....
 schema.plugin(AutoIncrement);
 

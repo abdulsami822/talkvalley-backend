@@ -34,7 +34,7 @@ const schema = mongoose.Schema({
     validate: [validator.isURL, "Image url is not correct"],
   },
 });
-
+schema.index({ "$**": "text" }, { name: "AllTextIndex" });
 schema.plugin(AutoIncrement, { inc_field: "adId" });
 
 const Ads = mongoose.model("ads", schema);

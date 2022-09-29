@@ -1,4 +1,5 @@
 const httpStatus = require("http-status");
+const { Error } = require("mongoose");
 const ApiError = require("./ApiError");
 
 const errorConvertor = (error, req, res, next) => {
